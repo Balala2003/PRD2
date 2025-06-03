@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寫信 - 共感森林 | Empathy Forest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comfortaa', sans-serif;
+            overflow-x: hidden;
+            background-color: transparent;
+        }
+        
+        .header {
+            width: 100%;
+            padding: 15px 30px;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E8E5DD;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #8FB08F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-circle img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .logo-text {
+            color: #6A8A6A;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-item {
+            color: black;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .nav-item:hover {
+            color: #6A8A6A;
+        }
+        
+        .nav-item.active {
+            color: #6A8A6A;
+            font-weight: 600;
+        }
+        
+        .main-container {
+            width: 100%;
+            min-height: calc(100vh - 71px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bg-image {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            object-fit: cover;
+        }
+        
+        .page-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #6A8A6A;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: #6A8A6A;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .letter-form-container {
+            width: 600px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #6A8A6A;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #E8E5DD;
+            border-radius: 8px;
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .form-control:focus {
+            border-color: #6A8A6A;
+        }
+        
+        textarea.form-control {
+            height: 280px;
+            resize: none;
+        }
+        
+        .privacy-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .privacy-btn {
+            padding: 8px 15px;
+            border: 1px solid #6A8A6A;
+            background-color: white;
+            color: #6A8A6A;
+            border-radius: 30px;
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 120px;
+            text-align: center;
+            outline: none;
+        }
+        
+        .privacy-btn.active {
+            background: linear-gradient(90deg, #6A8A6A 0%, #8FB08F 100%);
+            color: white;
+            border: none;
+        }
+        
+        .privacy-btn:hover:not(.active) {
+            background-color: #f0f0f0;
+        }
+        
+        .send-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .send-btn {
+            background: linear-gradient(90deg, #6A8A6A 0%, #8FB08F 100%);
+            color: white;
+            padding: 15px 60px;
+            border-radius: 30px;
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(106, 138, 106, 0.2);
+            outline: none;
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(106, 138, 106, 0.3);
+        }
+        
+        .send-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(106, 138, 106, 0.2);
+        }
+        
+        /* 手機版樣式 */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #6A8A6A;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                padding: 80px 40px;
+                gap: 20px;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.4);
+                z-index: 999;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+            
+            .nav-item {
+                font-size: 16px;
+                padding: 10px 0;
+            }
+            
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .logo-text {
+                font-size: 18px;
+            }
+            
+            .letter-form-container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .page-subtitle {
+                font-size: 16px;
+                padding: 0 20px;
+                margin-bottom: 30px;
+            }
+            
+            .form-control {
+                padding: 12px;
+            }
+            
+            textarea.form-control {
+                height: 200px;
+            }
+            
+            .privacy-options {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .privacy-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .send-btn {
+                width: 100%;
+                padding: 12px 0;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .page-subtitle {
+                font-size: 14px;
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo-container">
+            <div class="logo-circle">
+                <img src="empathy_forest_logo.svg" alt="Empathy Forest Logo">
+            </div>
+            <div class="logo-text">Empathy Forest</div>
+        </a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="#" class="nav-item">Event</a>
+            <a href="forest-letter.html" class="nav-item active">Write a Letter</a>
+            <a href="my-garden.html" class="nav-item">My Garden</a>
+            <a href="View-the-Forest.html" class="nav-item">View the Forest</a>
+            <a href="#" class="nav-item">About Us</a>
+            <a href="#" class="nav-item">Join Us</a>
+            <a href="#" class="nav-item">Support Us</a>
+        </nav>
+        <div class="overlay"></div>
+    </header>
+
+    <div class="main-container">
+        <img src="forest_background.jpg" alt="Forest Background" class="bg-image">
+        
+        <div class="page-content">
+            <h1 class="page-title">Forest Letter</h1>
+            <p class="page-subtitle">Here, you can write down everything you feel.</p>
+            
+            <div class="letter-form-container">
+                <form id="letterForm">
+                    <div class="form-group">
+                        <label class="form-label">Letter Title</label>
+                        <input type="text" class="form-control" placeholder="Give your letter a gentle title...">
+            </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Your Letter</label>
+                        <textarea class="form-control" placeholder="Write your thoughts and feelings here..."></textarea>
+          </div>
+                    
+                    <div class="privacy-options">
+                        <button type="button" class="privacy-btn active">Keep Private</button>
+                        <button type="button" class="privacy-btn">Make Public</button>
+              </div>
+                    
+                    <div class="send-btn-container">
+                        <button type="button" class="send-btn" id="sendButton">Send</button>
+              </div>
+                </form>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+        // 手機版菜單切換功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            const overlay = document.querySelector('.overlay');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+                
+                // 阻止菜單打開時的頁面滾動
+                if (navMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            overlay.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // 點擊菜單項目時關閉菜單
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            // 隱私按鈕切換
+            const privacyBtns = document.querySelectorAll('.privacy-btn');
+            privacyBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    privacyBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 發送按鈕跳轉到情緒種子頁面
+            document.getElementById('sendButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'emotion-seed.html';
+            });
+        });
+    </script>
+</body>
+</html>
